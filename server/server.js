@@ -9,5 +9,8 @@ const io = new Server(3001, {
 
 io.on('connection', (socket) => {
 	console.log('New user connected');
-	socket.emit('msg', 'Hello World');
-});
+	socket.emit('test', 'Hello World');
+    socket.on('send', (arg) => {
+        console.log(arg);
+    })
+})
