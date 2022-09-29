@@ -1,6 +1,17 @@
 {
-  "dependencies": {
-    "node": "^18.9.0",
-    "yarn": "^1.22.19"
-  }
+	"name": "chatapp",
+	"version": "0.0.1",
+	"description": "Chat App",
+	"main": "./server/server.js",
+	"type": "module",
+	"scripts": {
+		"client:dev": "http-server public -p 3000",
+		"server:dev": "nodemon ./server/server.js"
+	},
+	"dependencies": {
+		"socket.io": "^4.5.2"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.15"
+	}
 }
