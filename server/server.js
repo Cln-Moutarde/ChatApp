@@ -7,10 +7,19 @@ const io = new Server(3001, {
 	},
 });
 
+const users = {};
+
 io.on('connection', (socket) => {
 	console.log('New user connected');
-	socket.emit('test', 'Hello World');
-    socket.on('send', (arg) => {
-        console.log(arg);
-    })
+	socket.on('new-user', (name) => {
+		users[socket.id] = name;
+		socket.broadcast.emit('user-connected', name);
+	});
+    socket.on('send', (message) => {
+       socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] });
+    });
+	socket.on('disconnect', () => {
+		socket.broadcast.emit('user-disconnected', users[socket.id]);
+		delete users[socket.id]
+	});
 })
