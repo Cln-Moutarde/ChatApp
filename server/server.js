@@ -1,6 +1,14 @@
 import { Server } from 'socket.io';
+import { createServer } from 'node:http';
+import express from 'express';
 
-const io = new Server(3001, {
+const app = express();
+
+app.use(express.static('public'));
+
+const httpServer = createServer(app);
+const port = process.env.PORT || 3000;
+const io = new Server(httpServer, {
 	cors: {
 		origin: '*',
 		methods: ['GET', 'POST'],
@@ -15,11 +23,14 @@ io.on('connection', (socket) => {
 		users[socket.id] = name;
 		socket.broadcast.emit('user-connected', name);
 	});
-    socket.on('send', (message) => {
-       socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] });
-    });
+	socket.on('send', (message) => {
+		socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] });
+	});
 	socket.on('disconnect', () => {
 		socket.broadcast.emit('user-disconnected', users[socket.id]);
 		delete users[socket.id]
 	});
 })
+
+
+httpServer.listen(port);

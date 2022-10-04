@@ -5,15 +5,13 @@
 	"main": "./server/server.js",
 	"type": "module",
 	"scripts": {
-		"dev": "run-p client:dev server:dev",
-		"client:dev": "http-server public -p 3000",
 		"server:dev": "nodemon ./server/server.js"
 	},
 	"dependencies": {
+		"express": "^4.18.1",
 		"socket.io": "^4.5.2"
 	},
 	"devDependencies": {
-		"http-server": "^14.1.1",
 		"nodemon": "^2.0.15",
 		"npm-run-all": "^4.1.5"
 	}
