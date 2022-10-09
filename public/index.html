@@ -3,8 +3,13 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script src="index.js"></script>
+		<meta name="viewport" content="width=device-width initial-scale=1.0" />
+		<script defer src="index.js"></script>
+		<script
+			src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+			integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+			crossorigin="anonymous"
+		></script>
 		<link rel="stylesheet" href="index.css" />
 		<title>ChatApp</title>
 	</head>
@@ -12,13 +17,21 @@
 		<div id="title">
 			<h1>ChatApp</h1>
 		</div>
+		<div id="selectusername">
+			<input type="text" id="username" placeholder="Username" />
+			<button id="submitusername" onclick="submitusernamefunction()">
+				Submit
+			</button>
+		</div>
 		<div id="buttons">
 			<button id="Join">Join</button>
-			<button id="Create">Create</button>
+			<button id="Create" onclick="createID()">Create</button>
 			<div id="joinform">
-				<form id="form">
+				<form id="form" autocomplete="off">
 					<input type="text" id="chatid" placeholder="Chat ID" />
-					<button id="joinchat">Validate</button>
+					<button id="joinchat" type="button" onclick="joinID()">
+						Validate
+					</button>
 				</form>
 			</div>
 		</div>

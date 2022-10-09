@@ -24,13 +24,36 @@ io.on('connection', (socket) => {
 		socket.broadcast.emit('user-connected', name);
 	});
 	socket.on('send', (message) => {
-		socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] });
+		socket.broadcast.emit('chat-message', {
+			message: message,
+			name: users[socket.id],
+		});
 	});
 	socket.on('disconnect', () => {
 		socket.broadcast.emit('user-disconnected', users[socket.id]);
-		delete users[socket.id]
+		delete users[socket.id];
 	});
-})
+});
 
+function idfunction() {
+	const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+	let id = '';
+
+	for (let i = 0; i < 5; i++) {
+		id += alphabet[Math.floor(Math.random() * alphabet.length)];
+	}
+
+	return id;
+}
+
+io.use((socket, next) => {
+	const name = socket.handshake.auth.name;
+	if (!name) {
+		return next(new Error('invalid username'));
+	}
+	socket.name = name;
+	next();
+});
 
 httpServer.listen(port);

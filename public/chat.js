@@ -25,7 +25,9 @@ socket.on('user-disconnected', (name) => {
 messageForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	const message = messageInput.value;
-	newmessage(`You: ${message}`);
+	if (message == '') {
+		alert('Please enter a message');
+	} else newmessage(`You: ${message}`);
 	socket.emit('send', message);
 	messageInput.value = '';
 });
